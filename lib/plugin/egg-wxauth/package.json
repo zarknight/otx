@@ -1,0 +1,7 @@
+{
+  "name": "egg-wxauth",
+  "version": "1.0.0",
+  "eggPlugin": {
+    "name": "wxauth"
+  }
+}

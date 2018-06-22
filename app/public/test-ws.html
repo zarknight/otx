@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <script src="socket.io.js"></script>
+</head>
+
+<body>
+  <script>
+    window.onload = function () {
+      const socket = io('/p2p', {
+        transports: ['websocket'],
+        query: {
+          room: 'demo',
+          userId: `client_${Math.random()}`,
+        }
+      });
+
+      socket.on('connect', () => {
+        const id = socket.id;
+
+        console.log('#connect:', id, socket);
+
+        socket.on('online', msg => {
+          console.log('#online:', msg);
+        });
+
+        socket.on(id, msg => {
+          console.log('#receive:', msg);
+        });
+
+        socket.on('disconnect', msg => {
+          console.log('#disconnect:', msg);
+        });
+
+        socket.on('disconnecting', () => {
+          console.log('#disconnecting');
+        });
+
+        socket.on('error', () => {
+          console.log('#error');
+        });
+      });
+
+      window.socket = socket;
+    };
+  </script>
+</body>
+
+</html>
